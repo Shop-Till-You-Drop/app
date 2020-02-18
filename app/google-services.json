@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "683882465683",
+    "firebase_url": "https://app-sign-in-295d0.firebaseio.com",
+    "project_id": "app-sign-in-295d0",
+    "storage_bucket": "app-sign-in-295d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683882465683:android:52bf0d059c81d21f640066",
+        "android_client_info": {
+          "package_name": "com.example.shoptilyoudrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683882465683-2cpi721lsi1orcs2ekgj9cs2n9m7kv09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shoptilyoudrop",
+            "certificate_hash": "1c263c2089c72c41f4fb7ec0f1f4cc27fbb7fcff"
+          }
+        },
+        {
+          "client_id": "683882465683-o0ovfpedjs54udvbfgicelki1o4vbidq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6hcPu86882GD5HpulV0qN1VNctNeGAHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683882465683-o0ovfpedjs54udvbfgicelki1o4vbidq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
