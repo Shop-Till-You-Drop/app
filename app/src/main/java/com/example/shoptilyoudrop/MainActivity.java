@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 //                    LoginActivity testing = new LoginActivity();
 //                    String userId = testing.getName();
                     DatabaseReference mRef =  database.getReference("").child("Test");
-                    mRef.child(foodToText).setValue(priceToText);
+                    mRef.child(foodToText).setValue(Double.parseDouble(priceToText));
                 }
             }
         });
