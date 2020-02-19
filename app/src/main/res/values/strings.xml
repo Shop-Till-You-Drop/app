@@ -7,4 +7,9 @@
     <string name="password">password</string>
     <string name="email">email</string>
     <string name="log_out">log out</string>
+    <string name="add">add</string>
+    <string name="name">Name</string>
+    <string name="type_food">Type of Food</string>
+    <string name="price_of_food">Price</string>
+
 </resources>

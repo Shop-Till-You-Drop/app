@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "683882465683-uh027rk4ki2s75m1757smbb6v7ec9ss8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shoptilyoudrop",
+            "certificate_hash": "f5c648622fb9f3f9ef2d7450f526a0f1240778ac"
+          }
+        },
+        {
           "client_id": "683882465683-2cpi721lsi1orcs2ekgj9cs2n9m7kv09.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
