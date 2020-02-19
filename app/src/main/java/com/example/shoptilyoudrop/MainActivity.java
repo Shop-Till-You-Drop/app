@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText food;
     private Button addName;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +40,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String foodToText = food.getText().toString();
                 String priceToText = price.getText().toString();
+                Intent intent = getIntent();
+                String fName = intent.getStringExtra("Test");
                 if(foodToText.isEmpty()){
                     Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     FirebaseDatabase database =  FirebaseDatabase.getInstance();
-                    FirebaseUser user =  mAuth.getCurrentUser();
-//                    LoginActivity testing = new LoginActivity();
-//                    String userId = testing.getName();
-                    DatabaseReference mRef =  database.getReference("").child("Test2");
+                    DatabaseReference mRef =  database.getReference("").child("Temp");
                     mRef.child(foodToText).setValue(Double.parseDouble(priceToText));
+                    Toast.makeText(MainActivity.this, fName, Toast.LENGTH_SHORT).show();
                 }
             }
         });

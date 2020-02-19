@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private FirebaseAuth author;
+    private String emailTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailTxt = email.getText().toString();
+                emailTxt = email.getText().toString();
                 String passwordTxt = password.getText().toString();
                 loginUser(emailTxt, passwordTxt);
             }
@@ -42,7 +43,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this , MainActivity.class));
+                    Intent i = new Intent(LoginActivity.this , MainActivity.class);
+//                    Intent i = new Intent(LoginActivity.this , MainActivity.class);
+                    i.putExtra("Test","joeojazz@gmail.com");
+                    startActivity(i);
                     finish();
                 }
             });
