@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseUser user =  mAuth.getCurrentUser();
 //                    LoginActivity testing = new LoginActivity();
 //                    String userId = testing.getName();
-                    DatabaseReference mRef =  database.getReference("").child("Test");
+                    DatabaseReference mRef =  database.getReference("").child("Test2");
                     mRef.child(foodToText).setValue(Double.parseDouble(priceToText));
                 }
             }
