@@ -46,10 +46,17 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    FirebaseDatabase database =  FirebaseDatabase.getInstance();
-                    DatabaseReference mRef =  database.getReference("").child("Temp");
-                    mRef.child(foodToText).setValue(Double.parseDouble(priceToText));
-                    Toast.makeText(MainActivity.this, fName, Toast.LENGTH_SHORT).show();
+                    if (fName != null && !fName.isEmpty()){
+                            String[] emailExt = fName.split("@");
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference mRef = database.getReference("").child("Database");
+                            mRef.child(emailExt[0]).child(foodToText).setValue(Double.parseDouble(priceToText));
+                            Toast.makeText(MainActivity.this, "Added to "+fName, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Invalid Account", Toast.LENGTH_SHORT).show();
+                        }
                 }
             }
         });
