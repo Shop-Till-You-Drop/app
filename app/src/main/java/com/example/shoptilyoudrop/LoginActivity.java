@@ -1,5 +1,6 @@
 package com.example.shoptilyoudrop;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private FirebaseAuth author;
     private String emailTxt;
+    private String toastMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +41,44 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-        private void loginUser(String email, String password){
-            author.signInWithEmailAndPassword(email , password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+
+    private void loginUser(String email, String password) {
+        author.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                 @Override
                 public void onSuccess(AuthResult authResult) {
-                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    toastMessage = "Login Successful!";
+                    Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginActivity.this , MainActivity.class);
 //                    Intent i = new Intent(LoginActivity.this , MainActivity.class);
                     i.putExtra("Test",emailTxt);
                     startActivity(i);
                     finish();
                 }
-            });
-        }
+        });
 
+        author.signInWithEmailAndPassword(email, password).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                toastMessage = "Login Failed";
+                Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    public EditText getEmail() {
+        return email;
+    }
+
+    public EditText getPassword() {
+        return password;
+    }
+
+    public Button getLogin() {
+        return login;
+    }
+
+    public String getToastMessage() {
+        return toastMessage;
+    }
+
+}
