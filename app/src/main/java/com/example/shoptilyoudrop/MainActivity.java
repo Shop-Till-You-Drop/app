@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     list.clear();
                     for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                        if(snapshot!=null) {
+                        if(snapshot.getValue()!=null) {
                             list.add(snapshot.getValue().toString());
                         }
                     }
