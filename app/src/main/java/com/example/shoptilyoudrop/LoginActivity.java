@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth author;
     private String emailTxt;
     private String toastMessage;
+    private String passwordTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,21 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                emailTxt = email.getText().toString();
-                String passwordTxt = password.getText().toString();
-                loginUser(emailTxt, passwordTxt);
+                if(email.getText().toString().isEmpty()){
+                    toastMessage = "Login Failed";
+                    Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    emailTxt = email.getText().toString();
+                    passwordTxt = "";
+                    if (password.getText().toString().isEmpty()) {
+                        toastMessage = "Login Failed";
+                        Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                    } else {
+                        passwordTxt = password.getText().toString();
+                        loginUser(emailTxt, passwordTxt);
+                    }
+                }
             }
         });
     }
