@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private Button register;
     private FirebaseAuth temp;
+    private String toastMessage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,15 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordTxt = password.getText().toString();
 
                 if(TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt)){
-                    Toast.makeText(RegisterActivity.this, "Empty", Toast.LENGTH_SHORT).show();
+                    toastMessage = "Empty";
+                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
                 else if (passwordTxt.length()<8){
-                    Toast.makeText(RegisterActivity.this, "Password mush be 8 characters", Toast.LENGTH_SHORT).show();
+                    toastMessage = "Password must be 8 characters";
+                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    toastMessage = null;
                     registerUser(emailTxt,passwordTxt);
                 }
             }
@@ -56,14 +60,32 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this,"Success",Toast.LENGTH_SHORT).show();
+                    toastMessage = "Success";
+                    Toast.makeText(RegisterActivity.this, toastMessage,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     finish();
                 }
                 else {
-                    Toast.makeText(RegisterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    toastMessage = "Failed";
+                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public EditText getEmail() {
+        return email;
+    }
+
+    public EditText getPassword() {
+        return password;
+    }
+
+    public Button getRegister() {
+        return register;
+    }
+
+    public String getToastMessage() {
+        return toastMessage;
     }
 }
