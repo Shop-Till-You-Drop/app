@@ -11,58 +11,73 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="670dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/food"
-        android:layout_width="150dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="6dp"
         android:autofillHints=""
-        android:gravity="center_horizontal"
         android:hint="@string/type_food"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@id/price"
-        app:layout_constraintEnd_toEndOf="@id/price"
-        app:layout_constraintStart_toStartOf="@id/price"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/price"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:layout_marginBottom="10dp"
         android:autofillHints=""
-        android:gravity="center_horizontal"
         android:hint="@string/price_of_food"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@id/add"
-        app:layout_constraintEnd_toEndOf="@id/add"
-        app:layout_constraintStart_toStartOf="@id/add"
-        app:layout_constraintTop_toTopOf="@id/food" />
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="161dp"
+        android:autofillHints=""
         android:text="@string/add"
-        app:layout_constraintBottom_toBottomOf="@id/logout"
-        app:layout_constraintEnd_toEndOf="@id/logout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/logout"
-        app:layout_constraintTop_toTopOf="@id/logout"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/logout"
+        android:layout_below="@id/add"
+        android:padding="10dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="65dp"
+        android:id="@+id/listView"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="733dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

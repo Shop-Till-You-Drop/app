@@ -1,23 +1,33 @@
 package com.example.shoptilyoudrop;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private Button logout;
     private EditText price;
     private EditText food;
     private Button addName;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         price = findViewById(R.id.price);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
+        listView = findViewById(R.id.listView);
+        Intent intent = getIntent();
+        final String fName = intent.getStringExtra("Test");
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String foodToText = food.getText().toString();
                 String priceToText = price.getText().toString();
-                Intent intent = getIntent();
-                String fName = intent.getStringExtra("Test");
                 if(foodToText.isEmpty()){
                     Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
                 }
@@ -60,5 +72,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final ArrayList<String> list = new ArrayList<>();
+        final ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.list_item, list);
+        listView.setAdapter(adapter);
+        if (fName != null && !fName.isEmpty()) {
+            String[] emailExt = fName.split("@");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Database");
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    list.clear();
+                    for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                        if(snapshot!=null) {
+                            list.add(snapshot.getValue().toString());
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 }
