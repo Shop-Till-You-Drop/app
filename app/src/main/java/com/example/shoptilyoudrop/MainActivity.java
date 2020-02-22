@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addName;
     private ListView listView;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,24 @@ public class MainActivity extends AppCompatActivity {
             });
 
             final ArrayList<String> list = new ArrayList<>();
-            final ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.list_item, list);
+            adapter = new ArrayAdapter<>(this, R.layout.list_item, list);
             listView.setAdapter(adapter);
+            food.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    (MainActivity.this).adapter.getFilter().filter(s);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
             if (!fName.isEmpty()) {
 //            String[] temp = fName.split("@");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Database").child(fName);
