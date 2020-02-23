@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button logout;
     private EditText price;
     private EditText food;
+    private EditText store;
     private Button addName;
     private ListView listView;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         logout = findViewById(R.id.logout);
         price = findViewById(R.id.price);
+        store = findViewById(R.id.store);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
         listView = findViewById(R.id.listView);
@@ -68,13 +70,14 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     String foodToText = food.getText().toString();
                     String priceToText = price.getText().toString();
+                    String storeToText = store.getText().toString();
                     if (foodToText.isEmpty()) {
                         Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
                     } else {
                         if (!fName.isEmpty()) {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference mRef = database.getReference("").child("Database");
-                            mRef.child(fName).child(foodToText).setValue(Double.parseDouble(priceToText));
+                            mRef.child(fName).child(foodToText).child(storeToText).setValue(Double.parseDouble(priceToText));
                             Toast.makeText(MainActivity.this, "Added to " + fName, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Invalid Account", Toast.LENGTH_SHORT).show();
