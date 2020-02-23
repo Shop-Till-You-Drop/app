@@ -1,6 +1,7 @@
 package com.example.shoptilyoudrop;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,10 +32,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private Button logout;
     private EditText price;
-    private EditText food;
+    private AutoCompleteTextView food;
     private EditText store;
     private Button addName;
-    private ListView listView;
     private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayAdapter adapter;
 
@@ -47,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         store = findViewById(R.id.store);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
-        listView = findViewById(R.id.listView);
         Intent intent = getIntent();
         String tempName = "";
 
@@ -85,47 +86,24 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-
             final ArrayList<String> list = new ArrayList<>();
-            adapter = new ArrayAdapter<>(this, R.layout.list_item, list);
-            listView.setAdapter(adapter);
-            food.addTextChangedListener(new TextWatcher() {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference mRef = database.getReference("").child("Database").child(fName);
+            mRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                        list.add(postSnapshot.getKey());
+                    }
                 }
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    (MainActivity.this).adapter.getFilter().filter(s);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
-            if (!fName.isEmpty()) {
-//            String[] temp = fName.split("@");
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Database").child(fName);
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        list.clear();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            if (snapshot.getValue() != null) {
-                                list.add(snapshot.getKey() + ": " + snapshot.getValue().toString());
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+            food.setAdapter(adapter);
         }
     }
 }
