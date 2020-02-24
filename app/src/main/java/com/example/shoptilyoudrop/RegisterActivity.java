@@ -48,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    toastMessage = null;
                     registerUser(emailTxt,passwordTxt);
                 }
             }
@@ -87,5 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     public String getToastMessage() {
         return toastMessage;
+    }
+
+    public FirebaseAuth getTemp() {
+        return temp;
     }
 }

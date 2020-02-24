@@ -94,4 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         return toastMessage;
     }
 
+    public FirebaseAuth getAuthor() {
+        return author;
+    }
 }

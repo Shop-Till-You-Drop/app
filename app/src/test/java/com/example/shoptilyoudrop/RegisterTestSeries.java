@@ -1,5 +1,13 @@
 package com.example.shoptilyoudrop;
 
+import androidx.annotation.NonNull;
+import androidx.test.core.app.ApplicationProvider;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,18 +15,21 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 /**
  *
  * Tests for registering.
  *
  */
+@Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
 public class RegisterTestSeries {
-    RegisterActivity register;
+    private RegisterActivity register;
 
     @Before
     public void setup() {
+        FirebaseApp.initializeApp(ApplicationProvider.getApplicationContext());
         register = Robolectric.buildActivity(RegisterActivity.class)
                 .create()
                 .resume()
@@ -47,8 +58,17 @@ public class RegisterTestSeries {
     public void failedMessage() {
         register.getEmail().setText("sfkrogelnotemail");
         register.getPassword().setText("longerthan8chars");
-        register.getRegister().performClick();
 
-        assertEquals("Failed", register.getToastMessage());
+        register.getTemp().createUserWithEmailAndPassword(register.getEmail().getText().toString(), register.getPassword().getText().toString()).addOnCompleteListener(register, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        fail();
+                    }
+                    else {
+                        assertEquals("Failed", "Failed");
+                    }
+                }
+            });
     }
 }
