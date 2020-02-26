@@ -14,43 +14,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="0dp"
         android:autofillHints=""
-        android:completionThreshold="1"
         android:completionHint="Select a food"
+        android:completionThreshold="1"
         android:hint="@string/type_food"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/price"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/store"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
 
     <EditText
         android:id="@+id/price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginTop="80dp"
         android:autofillHints=""
         android:hint="@string/price_of_food"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/store"
+        app:layout_constraintBottom_toTopOf="@id/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.406" />
 
     <EditText
         android:id="@+id/store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginTop="60dp"
         android:autofillHints=""
         android:hint="@string/store"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/add"
+        app:layout_constraintBottom_toTopOf="@id/price"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/add"
@@ -59,15 +58,13 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="480dp"
         android:autofillHints=""
         android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/price"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/logout"
