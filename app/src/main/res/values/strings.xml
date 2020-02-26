@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">Shop Til You Drop</string>
-    <string name="this_is_joe">This is Joe!</string>
-    <string name="test">Test</string>
     <string name="login">login</string>
     <string name="register">register</string>
     <string name="password">password</string>
     <string name="email">email</string>
     <string name="log_out">log out</string>
     <string name="add">add</string>
-    <string name="name">Name</string>
     <string name="type_food">Type of Food</string>
     <string name="price_of_food">Price</string>
     <string name="store">Store</string>
