@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addName;
     private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayAdapter adapter;
+    private Button checkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         store = findViewById(R.id.store);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
+        checkout = findViewById(R.id.checkout);
+
         Intent intent = getIntent();
         String tempName = "";
 
@@ -102,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+//            checkout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                   FirebaseAuth.getInstance()
+//                }
+//            });
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
             food.setAdapter(adapter);
         }

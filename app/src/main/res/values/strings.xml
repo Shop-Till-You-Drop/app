@@ -9,5 +9,6 @@
     <string name="type_food">Type of Food</string>
     <string name="price_of_food">Price</string>
     <string name="store">Store</string>
+    <string name="reset_password">Reset Password</string>
 
 </resources>
