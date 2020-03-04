@@ -19,7 +19,7 @@ import org.robolectric.annotation.Config;
 
 /**
  *
- * Tests for registering.
+ * A series of local unit tests for the registering activity of the Shop-til-You-Drop app.
  *
  */
 @Config(sdk = 28)

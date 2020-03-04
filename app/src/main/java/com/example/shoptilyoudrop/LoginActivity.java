@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button login;
-    private Button forgetPassword;
     private FirebaseAuth author;
     private String emailTxt;
     private String toastMessage;
@@ -36,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        forgetPassword = findViewById(R.id.forgetPassword);
+        Button forgetPassword = findViewById(R.id.forgetPassword);
         author = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
