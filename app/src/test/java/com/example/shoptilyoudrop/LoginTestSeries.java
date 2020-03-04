@@ -18,9 +18,8 @@ import org.robolectric.annotation.Config;
 import static org.junit.Assert.*;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ * A series of local unit tests for the login activity of the Shop-til-You-Drop app.
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
