@@ -65,8 +65,8 @@ public class LoginTestSeries {
 
     @Test
     public void correctLogin() {
-        login.getEmail().setText("joeojazz@gmail,com");
-        login.getPassword().setText("12345678");
+        login.getEmail().setText("sfkrogel@mtu.edu");
+        login.getPassword().setText("Igotapassword");
         login.getAuthor().signInWithEmailAndPassword(login.getEmail().getText().toString(), login.getPassword().getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
