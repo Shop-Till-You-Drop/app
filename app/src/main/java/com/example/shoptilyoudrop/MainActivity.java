@@ -1,32 +1,25 @@
 package com.example.shoptilyoudrop;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         store = findViewById(R.id.store);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
-        checkout = findViewById(R.id.checkout);
+        checkout = findViewById(R.id.checkOut);
 
         Intent intent = getIntent();
         String tempName = "";
@@ -78,14 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 String storeToText = store.getText().toString();
                 if (foodToText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
-                }
-                else if (storeToText.isEmpty()){
+                } else if (storeToText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Invalid Store", Toast.LENGTH_SHORT).show();
-                }
-                else if (priceToText.isEmpty()) {
+                } else if (priceToText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Invalid Price", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     if (!fName.isEmpty()) {
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference mRef = database.getReference("").child("Database");
@@ -103,21 +93,22 @@ public class MainActivity extends AppCompatActivity {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     list.add(postSnapshot.getKey());
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-//            checkout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                   FirebaseAuth.getInstance()
-//                }
-//            });
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         food.setAdapter(adapter);
     }

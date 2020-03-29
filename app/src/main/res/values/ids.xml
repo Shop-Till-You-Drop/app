@@ -3,4 +3,6 @@
     <item name="checkout" type="id" />
     <item name="btnForgotPassword" type="id" />
     <item name="eUserEmail" type="id" />
+    <item name="priceDisplay" type="id" />
+    <item name="totalPrice" type="id" />
 </resources>

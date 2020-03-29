@@ -1,29 +1,27 @@
 package com.example.shoptilyoudrop;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
-import android.os.Bundle;
+import androidx.annotation.NonNull;
+
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
+public class ForgotPasswordActivity extends AppCompatActivity {
 
-public class forgetPasswordActivity extends AppCompatActivity {
-
-    Toolbar toolbar;
-    ProgressBar progressBar;
-    EditText userEmail;
-    Button userPass;
+    private Toolbar toolbar;
+    private EditText userEmail;
+    private Button userPass;
 
     FirebaseAuth firebaseAuth;
 
@@ -31,11 +29,9 @@ public class forgetPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_password);
+        setContentView(R.layout.activity_forgot_password);
 
-        toolbar = findViewById(R.id.toolbar1);
-        progressBar = findViewById(R.id.progressBar);
-        userEmail = findViewById(R.id.eUserEmail);
+        userEmail = findViewById(R.id.Email);
         userPass = findViewById(R.id.btnForgotPassword);
         toolbar.setTitle("Forgot Password?");
 
@@ -48,11 +44,11 @@ public class forgetPasswordActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(forgetPasswordActivity.this,
+                            Toast.makeText(ForgotPasswordActivity.this,
                                     "Reset sent to email", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(forgetPasswordActivity.this,
-                                    Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgotPasswordActivity.this,
+                                    task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

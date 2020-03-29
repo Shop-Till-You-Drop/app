@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        Button forgetPassword = findViewById(R.id.forgetPassword);
+
         author = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                         loginUser(emailTxt, passwordTxt);
                     }
                 }
-            }
-        });
-        forgetPassword.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, forgetPasswordActivity.class));
             }
         });
     }
@@ -111,11 +104,13 @@ public class LoginActivity extends AppCompatActivity {
     //Function that hides the character code based off of https://stackoverflow.com/questions/6360222/problem-with-android-password-field-not-hiding-the-last-character-typed/16202479
     private class HiddenPassTransformationMethod implements TransformationMethod {
         private char passwordHider = '\u2022';
+
         //Passes chars
         @Override
         public CharSequence getTransformation(final CharSequence charSequence, final View view) {
             return new PassCharSequence(charSequence);
         }
+
         //We are not going to be implementing this function
         @Override
         public void onFocusChanged(final View view, final CharSequence charSequence, final boolean b, final int i, final Rect rect) {
@@ -123,19 +118,23 @@ public class LoginActivity extends AppCompatActivity {
 
         private class PassCharSequence implements CharSequence {
             private final CharSequence charSequence;
+
             public PassCharSequence(final CharSequence charSequence) {
                 this.charSequence = charSequence;
             }
+
             //Get the char at every location
             @Override
             public char charAt(final int index) {
                 return passwordHider;
             }
+
             //Get length of current password
             @Override
             public int length() {
                 return charSequence.length();
             }
+
             //Hides all the characters
             @Override
             public CharSequence subSequence(final int start, final int end) {
