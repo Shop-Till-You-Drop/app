@@ -1,5 +1,6 @@
 package com.example.shoptilyoudrop;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private EditText userEmail;
-    private Button userPass;
+    private Button resetLink;
 
     FirebaseAuth firebaseAuth;
 
@@ -32,12 +33,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         userEmail = findViewById(R.id.Email);
-        userPass = findViewById(R.id.btnForgotPassword);
+        resetLink = findViewById(R.id.resetLink);
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Forgot Password?");
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        userPass.setOnClickListener(new View.OnClickListener() {
+        resetLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -46,6 +48,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(ForgotPasswordActivity.this,
                                     "Reset sent to email", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(ForgotPasswordActivity.this, StartActivity.class));
                         } else {
                             Toast.makeText(ForgotPasswordActivity.this,
                                     task.getException().getMessage(), Toast.LENGTH_LONG).show();
