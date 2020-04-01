@@ -42,20 +42,35 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         resetLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ForgotPasswordActivity.this,
-                                    "Reset sent to email", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(ForgotPasswordActivity.this, StartActivity.class));
-                        } else {
-                            Toast.makeText(ForgotPasswordActivity.this,
-                                    task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                if(!userEmail.getText().toString().equals("")) {
+                    firebaseAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ForgotPasswordActivity.this,
+                                        "Reset sent to email", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(ForgotPasswordActivity.this, StartActivity.class));
+                            } else {
+                                if(task.getException().getMessage() != null) {
+                                    Toast.makeText(ForgotPasswordActivity.this,
+                                            task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else {
+                    Toast.makeText(ForgotPasswordActivity.this, "Email was empty. Please try again.", Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+
+    public EditText getUserEmail() {
+        return userEmail;
+    }
+
+    public Button getResetLink() {
+        return resetLink;
     }
 }
