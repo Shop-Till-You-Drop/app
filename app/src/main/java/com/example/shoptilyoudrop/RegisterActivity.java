@@ -21,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button register;
+    private Button back;
     private FirebaseAuth temp;
 
     @Override
@@ -31,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         register = findViewById(R.id.register);
+        back = findViewById(R.id.back);
         temp = FirebaseAuth.getInstance();
         register.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -47,6 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
                 else{
                     registerUser(emailTxt,passwordTxt);
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(RegisterActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }

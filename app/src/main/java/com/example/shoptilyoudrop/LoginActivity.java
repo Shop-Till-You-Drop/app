@@ -22,9 +22,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private Button login;
+    private Button back;
     private FirebaseAuth author;
     private String emailTxt;
-    private String toastMessage;
     private String passwordTxt;
 
     @Override
@@ -35,25 +35,33 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
+        back = findViewById(R.id.back);
 
         author = FirebaseAuth.getInstance();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (email.getText().toString().isEmpty()) {
-                    toastMessage = "Login Failed";
-                    Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 } else {
                     emailTxt = email.getText().toString();
                     passwordTxt = "";
                     if (password.getText().toString().isEmpty()) {
-                        toastMessage = "Login Failed";
-                        Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                     } else {
                         passwordTxt = password.getText().toString();
                         loginUser(emailTxt, passwordTxt);
                     }
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }
@@ -62,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         author.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                toastMessage = "Login Successful!";
-                Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
 //                    Intent i = new Intent(LoginActivity.this , MainActivity.class);
                 i.putExtra("Test", emailTxt);
@@ -75,8 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         author.signInWithEmailAndPassword(email, password).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                toastMessage = "Login Failed";
-                Toast.makeText(LoginActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -91,10 +97,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public Button getLogin() {
         return login;
-    }
-
-    public String getToastMessage() {
-        return toastMessage;
     }
 
     public FirebaseAuth getAuthor() {
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         private class PassCharSequence implements CharSequence {
             private final CharSequence charSequence;
 
-            public PassCharSequence(final CharSequence charSequence) {
+            private PassCharSequence(final CharSequence charSequence) {
                 this.charSequence = charSequence;
             }
 

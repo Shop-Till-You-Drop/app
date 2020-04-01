@@ -20,9 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private EditText userEmail;
     private Button resetLink;
+    private Button back;
 
     FirebaseAuth firebaseAuth;
 
@@ -34,8 +34,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         userEmail = findViewById(R.id.Email);
         resetLink = findViewById(R.id.resetLink);
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Forgot Password?");
+        back = findViewById(R.id.back);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -62,6 +61,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(ForgotPasswordActivity.this, "Email was empty. Please try again.", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ForgotPasswordActivity.this, StartActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }

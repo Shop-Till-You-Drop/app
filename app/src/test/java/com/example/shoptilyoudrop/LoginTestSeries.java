@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowToast;
+
 import static org.junit.Assert.*;
 
 /**
@@ -35,7 +37,7 @@ public class LoginTestSeries {
         login.getLogin().performClick();
 
         assertEquals( "Login did not return as failed. It may have crashed or been allowed to succeed. Check for how an empty username and empty password could continue on.",
-                "Login Failed", login.getToastMessage());
+                "Login Failed", ShadowToast.getTextOfLatestToast());
     }
 
     @Test
@@ -44,7 +46,7 @@ public class LoginTestSeries {
         login.getPassword().setText("");
         login.getLogin().performClick();
 
-        assertEquals("Login did not return as failed. It may have crashed or been allowed to succeed. Check for how an empty password could continue on.", "Login Failed", login.getToastMessage());
+        assertEquals("Login did not return as failed. It may have crashed or been allowed to succeed. Check for how an empty password could continue on.", "Login Failed", ShadowToast.getTextOfLatestToast());
     }
 
     @Test
@@ -53,6 +55,6 @@ public class LoginTestSeries {
         login.getPassword().setText("TotallyAPassword");
         login.getLogin().performClick();
 
-        assertEquals("Login did not return as failed. It may have crashed or been allowed to succeed. Check for how an empty username could continue on.","Login Failed", login.getToastMessage());
+        assertEquals("Login did not return as failed. It may have crashed or been allowed to succeed. Check for how an empty username could continue on.","Login Failed", ShadowToast.getTextOfLatestToast());
     }
 }
