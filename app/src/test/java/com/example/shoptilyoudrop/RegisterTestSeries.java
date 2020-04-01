@@ -2,20 +2,18 @@ package com.example.shoptilyoudrop;
 
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import static org.junit.Assert.*;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowToast;
 
 /**
  *
@@ -42,7 +40,7 @@ public class RegisterTestSeries {
         register.getPassword().setText("");
         register.getRegister().performClick();
 
-        assertEquals("Empty", register.getToastMessage());
+        assertEquals("App did not throw the message to say that the email was empty. Check how it could pass that section.", "Empty email", ShadowToast.getTextOfLatestToast());
     }
 
     @Test
@@ -51,24 +49,24 @@ public class RegisterTestSeries {
         register.getPassword().setText("123");
         register.getRegister().performClick();
 
-        assertEquals("Password must be 8 characters", register.getToastMessage());
+        assertEquals("App did not throw the message of the password not being long enough. See how it could pass that check in execution.", "Password must be at least 8 characters", ShadowToast.getTextOfLatestToast());
     }
 
     @Test
     public void failedMessage() {
-        register.getEmail().setText("sfkrogelnotemail");
+        register.getEmail().setText("SoNotAnEmail");
         register.getPassword().setText("longerthan8chars");
 
-        register.getTemp().createUserWithEmailAndPassword(register.getEmail().getText().toString(), register.getPassword().getText().toString()).addOnCompleteListener(register, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        fail();
-                    }
-                    else {
-                        assertEquals("Failed", "Failed");
-                    }
+        register.getTemp().createUserWithEmailAndPassword(register.getEmail().toString(), register.getPassword().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    fail("App/Firebase allowed invalid email to create an account.");
                 }
-            });
+                else {
+                    assertEquals("Failed", "Failed");
+                }
+            }
+        });
     }
 }

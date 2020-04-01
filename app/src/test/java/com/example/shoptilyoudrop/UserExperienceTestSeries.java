@@ -47,7 +47,7 @@ public class UserExperienceTestSeries {
         start.findViewById(R.id.register).performClick();
         Intent expected = new Intent(start, RegisterActivity.class);
         Intent actual = Shadows.shadowOf(start).getNextStartedActivity();
-        assertEquals(expected.toString().trim(), actual.toString().trim());
+        assertEquals("Start failed to reach RegisterActivity. Check logic behind the button meant to bring the user to the RegisterActivity.", expected.toString().trim(), actual.toString().trim());
     }
 
     @Test
@@ -59,38 +59,7 @@ public class UserExperienceTestSeries {
         start.findViewById(R.id.login).performClick();
         Intent expected = new Intent(start, LoginActivity.class);
         Intent actual = Shadows.shadowOf(start).getNextStartedActivity();
-        assertEquals(expected.toString().trim(), actual.toString().trim());
-    }
-
-    @Test
-    public void LoginToMain(){
-        login = Robolectric.buildActivity(LoginActivity.class)
-                .create()
-                .resume()
-                .get();
-        login.getEmail().setText("sfkrogel@mtu.edu");
-        login.getPassword().setText("Igotapassword");
-        login.getAuthor().signInWithEmailAndPassword(login.getEmail().getText().toString(), login.getPassword().getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                Intent i = new Intent(login , MainActivity.class);
-                i.putExtra("Test",login.getEmail().getText());
-                login.startActivity(i);
-                Intent expected = new Intent (login, MainActivity.class);
-                Intent actual = Shadows.shadowOf(login).getNextStartedActivity();
-
-                assertEquals(expected.toString().trim(), actual.toString().trim());
-                login.finish();
-            }
-        });
-
-        login.getAuthor().signInWithEmailAndPassword(login.getEmail().getText().toString(), login.getPassword().getText().toString()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                fail("Log-in details failed to log-in. Check if accounts have been reset.");
-            }
-        });
-        assertNull(Shadows.shadowOf(login).getNextStartedActivity());
+        assertEquals("Start failed to reach LoginActivity. Check logic behind the button meant to bring the user to the LoginActivity.", expected.toString().trim(), actual.toString().trim());
     }
 
 }

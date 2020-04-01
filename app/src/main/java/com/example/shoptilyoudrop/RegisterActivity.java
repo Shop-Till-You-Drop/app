@@ -22,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private Button register;
     private FirebaseAuth temp;
-    private String toastMessage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,10 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordTxt = password.getText().toString();
 
                 if(TextUtils.isEmpty(emailTxt) || TextUtils.isEmpty(passwordTxt)){
-                    toastMessage = "Empty";
-                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Empty email", Toast.LENGTH_SHORT).show();
                 }
                 else if (passwordTxt.length()<8){
-                    toastMessage = "Password must be 8 characters";
-                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     registerUser(emailTxt,passwordTxt);
@@ -59,14 +56,12 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    toastMessage = "Success";
-                    Toast.makeText(RegisterActivity.this, toastMessage,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Success",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                     finish();
                 }
                 else {
-                    toastMessage = "Failed";
-                    Toast.makeText(RegisterActivity.this, toastMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -82,10 +77,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     public Button getRegister() {
         return register;
-    }
-
-    public String getToastMessage() {
-        return toastMessage;
     }
 
     public FirebaseAuth getTemp() {

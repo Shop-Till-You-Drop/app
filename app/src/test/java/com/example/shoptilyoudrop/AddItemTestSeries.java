@@ -1,9 +1,7 @@
 package com.example.shoptilyoudrop;
 
-import android.content.Intent;
 import androidx.test.core.app.ApplicationProvider;
 import com.google.firebase.FirebaseApp;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +9,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
-
 import static org.junit.Assert.*;
 
 /**
@@ -26,9 +23,7 @@ public class AddItemTestSeries {
     @Before
     public void setup() {
         FirebaseApp.initializeApp(ApplicationProvider.getApplicationContext());
-        Intent extra = Robolectric.buildActivity(MainActivity.class).getIntent();
-        extra.putExtra("Test", "sfkrogel@mtu.edu");
-        prime = Robolectric.buildActivity(MainActivity.class).newIntent(extra)
+        prime = Robolectric.buildActivity(MainActivity.class)
                 .create()
                 .resume()
                 .get();
@@ -44,7 +39,7 @@ public class AddItemTestSeries {
 
         prime.findViewById(R.id.add).performClick();
 
-        assertEquals("Added to sfkrogel@mtu,edu", ShadowToast.getTextOfLatestToast());
+        assertEquals("App failed to give the message of an item being added to the account. Recheck the logic behind adding an item or specifying an account.", "Added to sfkrogel@mtu,edu", ShadowToast.getTextOfLatestToast());
     }
 
     @Test
@@ -57,7 +52,7 @@ public class AddItemTestSeries {
 
         prime.findViewById(R.id.add).performClick();
 
-        assertEquals("Invalid Food", ShadowToast.getTextOfLatestToast());
+        assertEquals("App did not report that the food was invalid. Check for what might ignore the food name text.","Invalid Food", ShadowToast.getTextOfLatestToast());
 
     }
     @Test
@@ -70,7 +65,7 @@ public class AddItemTestSeries {
 
         prime.findViewById(R.id.add).performClick();
 
-        assertEquals("Invalid Store", ShadowToast.getTextOfLatestToast());
+        assertEquals("App did not report that the food was invalid. Check for what might ignore the store name text.","Invalid Store", ShadowToast.getTextOfLatestToast());
     }
     @Test
     public void emptyPriceTest() {
@@ -82,7 +77,7 @@ public class AddItemTestSeries {
 
         prime.findViewById(R.id.add).performClick();
 
-        assertEquals("Invalid Price", ShadowToast.getTextOfLatestToast());
+        assertEquals("App did not report that the food was invalid. Check for what might ignore the price text.","Invalid Price", ShadowToast.getTextOfLatestToast());
     }
 
 
