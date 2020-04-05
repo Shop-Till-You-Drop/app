@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -153,17 +154,17 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            TASK<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
     }
 
-    private void handleSignInResult(TASK<GoogleSignInAccount> completedTask) {
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try{
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
             Toast.makeText(MainActivity.this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
@@ -196,9 +197,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUI(FirebaseUser fUser) {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignInAccount(getApplicationContext());
-        if (account != null) {
+    private void updateUI(FirebaseUser fUser){
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        if(account !=  null){
             String personName = account.getDisplayName();
             String personGivenName = account.getGivenName();
             String personFamilyName = account.getFamilyName();
@@ -206,8 +207,9 @@ public class MainActivity extends AppCompatActivity {
             String personId = account.getId();
             Uri personPhoto = account.getPhotoUrl();
 
-            Toast.makeText(MainActivity.this, personName + personEmail, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,personName + personEmail ,Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public AutoCompleteTextView getFood() {
