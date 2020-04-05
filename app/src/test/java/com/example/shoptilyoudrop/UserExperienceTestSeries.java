@@ -1,15 +1,8 @@
 package com.example.shoptilyoudrop;
 
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,8 +22,7 @@ import static org.junit.Assert.*;
 public class UserExperienceTestSeries {
 
     private StartActivity start;
-    private RegisterActivity register;
-    private LoginActivity login;
+    private MenuActivity menu;
     private MainActivity prime;
 
     @Before
@@ -60,6 +52,32 @@ public class UserExperienceTestSeries {
         Intent expected = new Intent(start, LoginActivity.class);
         Intent actual = Shadows.shadowOf(start).getNextStartedActivity();
         assertEquals("Start failed to reach LoginActivity. Check logic behind the button meant to bring the user to the LoginActivity.", expected.toString().trim(), actual.toString().trim());
+    }
+
+    @Test
+    public void MenuToAdd() {
+        menu = Robolectric.buildActivity(MenuActivity.class)
+                .create()
+                .resume()
+                .get();
+        menu.findViewById(R.id.add_item).performClick();
+        Intent expected = new Intent(menu, MainActivity.class);
+        expected.putExtra("Test", "");
+        Intent actual = Shadows.shadowOf(menu).getNextStartedActivity();
+        assertEquals("Add Item button failed to take the user to the MainActivity. Check the intent of the activity change.", expected.toString().trim(), actual.toString().trim());
+    }
+
+    @Test
+    public void MenuToCheckout() {
+        menu = Robolectric.buildActivity(MenuActivity.class)
+                .create()
+                .resume()
+                .get();
+        menu.findViewById(R.id.checkout).performClick();
+        Intent expected = new Intent(menu, CheckoutActivity.class);
+        expected.putExtra("Test", "");
+        Intent actual = Shadows.shadowOf(menu).getNextStartedActivity();
+        assertEquals("Checkout button failed to take the user to the CheckoutActivity. Check the intent of the activity change.", expected.toString().trim(), actual.toString().trim());
     }
 
 }
