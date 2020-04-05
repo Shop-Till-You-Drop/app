@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
 //                    Intent i = new Intent(LoginActivity.this , MainActivity.class);
                 i.putExtra("Test", emailTxt);
                 startActivity(i);

@@ -68,7 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(RegisterActivity.this, "Success",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    Intent i = new Intent(RegisterActivity.this, MenuActivity.class);
+                    i.putExtra("Test", getEmail().getText().toString());
+                    startActivity(i);
                     finish();
                 }
                 else {
