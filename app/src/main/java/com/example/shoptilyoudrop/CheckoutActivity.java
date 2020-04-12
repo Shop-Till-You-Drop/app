@@ -1,16 +1,10 @@
 package com.example.shoptilyoudrop;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.content.Intent;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextClock;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
