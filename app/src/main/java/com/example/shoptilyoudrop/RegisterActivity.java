@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        ((TextView) findViewById(R.id.password)).setTransformationMethod(new RegisterActivity.HiddenPassTransformationMethod());
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         register = findViewById(R.id.register);
@@ -94,5 +97,47 @@ public class RegisterActivity extends AppCompatActivity {
 
     public FirebaseAuth getTemp() {
         return temp;
+    }
+
+    //Function that hides the character code based off of https://stackoverflow.com/questions/6360222/problem-with-android-password-field-not-hiding-the-last-character-typed/16202479
+    private class HiddenPassTransformationMethod implements TransformationMethod {
+        private char passwordHider = '\u2022';
+
+        //Passes chars
+        @Override
+        public CharSequence getTransformation(final CharSequence charSequence, final View view) {
+            return new RegisterActivity.HiddenPassTransformationMethod.PassCharSequence(charSequence);
+        }
+
+        //We are not going to be implementing this function
+        @Override
+        public void onFocusChanged(final View view, final CharSequence charSequence, final boolean b, final int i, final Rect rect) {
+        }
+
+        private class PassCharSequence implements CharSequence {
+            private final CharSequence charSequence;
+
+            private PassCharSequence(final CharSequence charSequence) {
+                this.charSequence = charSequence;
+            }
+
+            //Get the char at every location
+            @Override
+            public char charAt(final int index) {
+                return passwordHider;
+            }
+
+            //Get length of current password
+            @Override
+            public int length() {
+                return charSequence.length();
+            }
+
+            //Hides all the characters
+            @Override
+            public CharSequence subSequence(final int start, final int end) {
+                return new RegisterActivity.HiddenPassTransformationMethod.PassCharSequence(charSequence.subSequence(start, end));
+            }
+        }
     }
 }
