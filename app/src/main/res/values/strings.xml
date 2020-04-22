@@ -15,5 +15,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="add_item">Add Item</string>
     <string name="checkout">Check Out</string>
+    <string name="add_to_checkout">Add to Checkout</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

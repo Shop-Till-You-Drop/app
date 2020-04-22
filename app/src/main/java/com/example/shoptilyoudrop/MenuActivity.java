@@ -14,6 +14,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private Button addItem;
     private Button checkout;
+    private Button favorites;
     private Button signOut;
     private String userName;
 
@@ -24,6 +25,7 @@ public class MenuActivity extends AppCompatActivity {
 
         addItem = findViewById(R.id.add_item);
         checkout = findViewById(R.id.checkout);
+        favorites = findViewById(R.id.favorites);
         signOut = findViewById(R.id.sign_out);
 
         Intent intent = getIntent();
@@ -50,6 +52,16 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuActivity.this, CheckoutActivity.class);
+                i.putExtra("Test", userName);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MenuActivity.this, FavoriteItemsActivity.class);
                 i.putExtra("Test", userName);
                 startActivity(i);
                 finish();
