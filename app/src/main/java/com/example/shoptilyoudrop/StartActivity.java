@@ -114,7 +114,7 @@ public class StartActivity extends AppCompatActivity {
         catch (ApiException e) {
 
             Toast.makeText(StartActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
-            FirebaseGoogleAuth(null);
+            //FirebaseGoogleAuth(null);
         }
 
     }
