@@ -23,12 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CheckoutActivity extends AppCompatActivity {
+public class ItemsActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
     ArrayList<String> items = new ArrayList<>();
     ArrayList<String> stores = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
-    private Double total;
     private String userName;
 
 
@@ -43,11 +42,12 @@ public class CheckoutActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(CheckoutActivity.this, StartActivity.class);
+                Intent i = new Intent(ItemsActivity.this, StartActivity.class);
                 startActivity(i);
                 finish();
             }
         });
+
     }
 
     private void displayItems() {
@@ -76,18 +76,18 @@ public class CheckoutActivity extends AppCompatActivity {
                     }
                 }
                 if (items.isEmpty()) {
-                    Toast.makeText(CheckoutActivity.this, "No items found on profile.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItemsActivity.this, "No favorites found on profile.", Toast.LENGTH_LONG).show();
                 }
                 items.add("");
                 stores.add("");
                 prices.add("");
                 ListView listView = findViewById(R.id.listview);
-                listView.setAdapter((new listAdapter(CheckoutActivity.this, items, stores, prices)));
+                listView.setAdapter((new listAdapter(ItemsActivity.this, items, stores, prices)));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(CheckoutActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ItemsActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -108,15 +108,49 @@ public class CheckoutActivity extends AppCompatActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = inflater.inflate(R.layout.checkout_items, parent, false);
+            View row = inflater.inflate(R.layout.list_item_1, parent, false);
             TextView name = row.findViewById(R.id.list_item_name);
             TextView store = row.findViewById(R.id.list_item_store);
             TextView price = row.findViewById(R.id.list_item_price);
+            Button addToCheckout = row.findViewById(R.id.list_item_add_to_checkout);
+            Button removeFromItems = row.findViewById(R.id.list_item_remove_from_items);
+
+            if (position == items.size() - 1) {
+                addToCheckout.setText(R.string.back);
+                removeFromItems.setText("");
+                addToCheckout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(ItemsActivity.this, MenuActivity.class);
+                        i.putExtra("Test", userName);
+                        startActivity(i);
+                        finish();
+                    }
+                });
+                removeFromItems.setVisibility(View.GONE);
+            } else {
+                addToCheckout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(ItemsActivity.this, items.get(position) + " added", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                removeFromItems.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatabaseReference refRemove = firebaseDatabase.getReference().child("").child("Database").child(userName);
+                        refRemove = refRemove.child(items.get(position)).child("Item").child(stores.get(position));
+                        refRemove.removeValue();
+                        Toast.makeText(ItemsActivity.this, items.get(position) + " removed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
             name.setText(foodType.get(position));
             store.setText(stores.get(position));
             price.setText(prices.get(position));
+
             return row;
         }
-
     }
 }
