@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addName;
     private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayAdapter adapter;
-    private Button checkout;
+    private Button back;
     private String fName;
 
     @Override
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         store = findViewById(R.id.store);
         food = findViewById(R.id.food);
         addName = findViewById(R.id.add);
-        checkout = findViewById(R.id.checkOut);
+        back = findViewById(R.id.back);
 
         Intent intent = getIntent();
         String tempName = "";
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 String storeToText = store.getText().toString();
                 if (foodToText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Invalid Food", Toast.LENGTH_SHORT).show();
-                } else if (storeToText.isEmpty()) {
+                } else if (storeToText.isEmpty() || storeToText.equals("Favorite")) {
                     Toast.makeText(MainActivity.this, "Invalid Store", Toast.LENGTH_SHORT).show();
                 } else if (priceToText.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Invalid Price", Toast.LENGTH_SHORT).show();
@@ -116,13 +116,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        checkout.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(MainActivity.this, MenuActivity.class);
+                i.putExtra("Test", fName);
+                startActivity(i);
+                finish();
             }
         });
     }
