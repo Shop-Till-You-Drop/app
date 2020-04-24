@@ -1,5 +1,6 @@
 package com.example.shoptilyoudrop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,15 @@ public class MenuActivity extends AppCompatActivity {
     private Button favorites;
     private Button signOut;
     private String userName;
+
+    private static final String TAG = "MenuActivity";
+    private static final String ARG_NAME = "username";
+
+    public static void startActivity(Context context, String username) {
+        Intent intent = new Intent(context, MenuActivity.class);
+        intent.putExtra(ARG_NAME, username);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
