@@ -91,7 +91,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
-                startActivity(new Intent(StartActivity.this, MenuActivity.class));
+                //startActivity(new Intent(StartActivity.this, MenuActivity.class));
             }
 
         });
@@ -137,6 +137,8 @@ public class StartActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
+        startActivity(new Intent(StartActivity.this, MenuActivity.class));
     }
 
 
