@@ -7,13 +7,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MenuActivity extends AppCompatActivity {
 
     private String userName;
+
+    private GoogleSignInClient mGoogleSignInClient;
 
     private static final String TAG = "MenuActivity";
     private static final String ARG_NAME = "username";
@@ -91,6 +100,7 @@ public class MenuActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 Toast.makeText(MenuActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MenuActivity.this, StartActivity.class));
+
             }
         });
     }
