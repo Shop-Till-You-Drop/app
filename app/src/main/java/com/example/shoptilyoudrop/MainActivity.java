@@ -101,15 +101,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        final ArrayList<String> list = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mRef = database.getReference("").child("Database").child(fName);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> list = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     list.add(postSnapshot.getKey());
                 }
+                adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, list);
+                food.setAdapter(adapter);
             }
 
             @Override
@@ -123,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        food.setAdapter(adapter);
     }
 
 
