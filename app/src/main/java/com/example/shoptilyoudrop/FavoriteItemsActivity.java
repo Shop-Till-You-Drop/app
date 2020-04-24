@@ -70,7 +70,6 @@ public class FavoriteItemsActivity extends AppCompatActivity {
                             } else if (snapshotstore.getValue() instanceof Long) {
                                 prices.add(Long.toString((Long) snapshotstore.getValue()));
                             }
-                            System.out.println(favorites);
                         }
                     }
                 }
