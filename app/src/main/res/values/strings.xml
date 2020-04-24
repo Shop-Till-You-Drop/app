@@ -18,5 +18,7 @@
     <string name="add_to_checkout">Add to Checkout</string>
     <string name="remove_from_favorites">Remove from Favorites</string>
     <string name="favorites">Favorites</string>
+    <string name="items">Items</string>
+    <string name="remove_from_items" />
 
 </resources>

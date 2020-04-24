@@ -13,14 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -37,13 +29,13 @@ import com.google.firebase.database.annotations.Nullable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private Button logout;
     private EditText price;
     private AutoCompleteTextView food;
     private EditText store;
-    private Button addName;
     private FirebaseAnalytics mFirebaseAnalytics;
     private ArrayAdapter adapter;
+    private Button addName;
+    private Button logout;
     private Button back;
     private String fName;
 
@@ -53,17 +45,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, savedInstanceState);
         setContentView(R.layout.activity_main);
-        logout = findViewById(R.id.logout);
         price = findViewById(R.id.price);
         store = findViewById(R.id.store);
         food = findViewById(R.id.food);
+        logout = findViewById(R.id.logout);
         addName = findViewById(R.id.add);
         back = findViewById(R.id.back);
 
         Intent intent = getIntent();
         String tempName = "";
 
-       if (intent.getStringExtra("Test") != null) {
+        if (intent.getStringExtra("Test") != null) {
             tempName = intent.getStringExtra("Test");
         }
         if (tempName != null) {
@@ -101,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mRef = database.getReference("").child("Database").child(fName);
         mRef.addValueEventListener(new ValueEventListener() {
@@ -129,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     public AutoCompleteTextView getFood() {
         return food;

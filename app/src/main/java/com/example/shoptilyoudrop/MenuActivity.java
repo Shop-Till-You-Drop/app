@@ -13,10 +13,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button addItem;
-    private Button checkout;
-    private Button favorites;
-    private Button signOut;
     private String userName;
 
     private static final String TAG = "MenuActivity";
@@ -33,10 +29,11 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        addItem = findViewById(R.id.add_item);
-        checkout = findViewById(R.id.checkout);
-        favorites = findViewById(R.id.favorites);
-        signOut = findViewById(R.id.sign_out);
+        Button addItem = findViewById(R.id.add_item);
+        Button checkout = findViewById(R.id.checkout);
+        Button favorites = findViewById(R.id.favorites);
+        Button items = findViewById(R.id.items);
+        Button signOut = findViewById(R.id.sign_out);
 
         Intent intent = getIntent();
         String tempName = "";
@@ -72,6 +69,16 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuActivity.this, FavoriteItemsActivity.class);
+                i.putExtra("Test", userName);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        items.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MenuActivity.this, ItemsActivity.class);
                 i.putExtra("Test", userName);
                 startActivity(i);
                 finish();

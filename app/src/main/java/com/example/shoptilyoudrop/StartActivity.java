@@ -30,8 +30,6 @@ import androidx.annotation.NonNull;
 
 public class StartActivity extends AppCompatActivity {
 
-
-
     private Button register;
     private Button login;
     private Button forgotPassword;
