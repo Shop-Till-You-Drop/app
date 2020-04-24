@@ -91,7 +91,9 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+                startActivity(new Intent(StartActivity.this, MenuActivity.class));
             }
+
         });
 
         // Configure Google Client
