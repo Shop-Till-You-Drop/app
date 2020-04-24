@@ -109,7 +109,7 @@ public class FavoriteItemsActivity extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = inflater.inflate(R.layout.list_item, parent, false);
             TextView name = row.findViewById(R.id.list_item_name);
-            final TextView store = row.findViewById(R.id.list_item_store);
+            TextView store = row.findViewById(R.id.list_item_store);
             TextView price = row.findViewById(R.id.list_item_price);
             Button addToCheckout = row.findViewById(R.id.list_item_add_to_checkout);
             Button removeFromFavorites = row.findViewById(R.id.list_item_remove_from_favorites);
