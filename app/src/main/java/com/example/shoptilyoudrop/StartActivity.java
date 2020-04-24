@@ -166,14 +166,14 @@ public class StartActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            Log.d(TAG2, "signInWithCredential:success: currentUser: " + user.getEmail());
+                            Log.d(TAG2, "signInWithCredential:success: currentUser: " + user.getEmail() + " ");
 
                             showToastMessage("Firebase Authentication Succeeded ");
                             launchMenuActivity(user);
                         }else {
                             Log.w(TAG2, "signInWithCredential:failure ", task.getException());
 
-                            showToastMessage("Firebase Authentication failed: " + task.getException());
+                            showToastMessage("Firebase Authentication failed: " + task.getException() + " ");
                         }
                     }
                 });
@@ -189,12 +189,12 @@ public class StartActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try{
             GoogleSignInAccount acc = completedTask.getResult(ApiException.class);
-            Toast.makeText(StartActivity.this, "Signed In Successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StartActivity.this, "Signed In Successfully ", Toast.LENGTH_SHORT).show();
             FirebaseGoogleAuth(acc);
         }
         catch (ApiException e) {
 
-            Toast.makeText(StartActivity.this, "Sign In Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(StartActivity.this, "Sign In Failed ", Toast.LENGTH_SHORT).show();
             //FirebaseGoogleAuth(null);
         }
 
@@ -206,12 +206,12 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(StartActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StartActivity.this, "Successful ", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
                     updateUI(user);
                 }
                 else {
-                    Toast.makeText(StartActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StartActivity.this, "Failed ", Toast.LENGTH_SHORT).show();
                     updateUI(null);
                 }
 
