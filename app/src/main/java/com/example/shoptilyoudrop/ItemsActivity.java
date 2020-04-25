@@ -185,9 +185,6 @@ public class ItemsActivity extends AppCompatActivity {
                 viewHolder.price.setText(prices.get(position));
                 convertView.setTag(viewHolder);
             } else {
-                System.out.println(foodType);
-                System.out.println(stores);
-                System.out.println(prices);
                 mainViewHolder = (ViewHolder) convertView.getTag();
                 mainViewHolder.name = convertView.findViewById(R.id.list_item_name);
                 mainViewHolder.store = convertView.findViewById(R.id.list_item_store);
