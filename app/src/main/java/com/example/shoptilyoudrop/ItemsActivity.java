@@ -28,6 +28,7 @@ public class ItemsActivity extends AppCompatActivity {
     ArrayList<String> items = new ArrayList<>();
     ArrayList<String> stores = new ArrayList<>();
     ArrayList<String> prices = new ArrayList<>();
+    ArrayList<CheckoutParent> checkoutParents = new ArrayList<>();
     private String userName;
 
 
@@ -48,6 +49,7 @@ public class ItemsActivity extends AppCompatActivity {
                 items = new ArrayList<>();
                 stores = new ArrayList<>();
                 prices = new ArrayList<>();
+                checkoutParents = new ArrayList<>();
                 for (DataSnapshot foodItem : dataSnapshot.getChildren()) {
                     if(foodItem != null) {
                         items.add(foodItem.getKey());
@@ -62,6 +64,23 @@ public class ItemsActivity extends AppCompatActivity {
                                 } else if (storeItem.getValue() instanceof Long) {
                                     prices.add(Long.toString((Long) storeItem.getValue()));
                                 }
+                            } else if (storeItem.getKey().matches("Checkout[0-9]*")) {
+                                CheckoutParent parent = new CheckoutParent();
+                                parent.parent = storeItem.getKey();
+                                parent.food = foodItem.getKey();
+                                for (DataSnapshot checkoutItem : storeItem.getChildren()) {
+                                    if (checkoutItem.getKey().equals("qty")) {
+                                        parent.quantity = checkoutItem.getValue().toString();
+                                    } else if (checkoutItem.getValue() != null) {
+                                        parent.store = checkoutItem.getKey();
+                                        if (storeItem.getValue() instanceof Double) {
+                                            parent.price = Double.toString((Double) storeItem.getValue());
+                                        } else if (storeItem.getValue() instanceof Long) {
+                                            parent.price = Long.toString((Long) storeItem.getValue());
+                                        }
+                                    }
+                                }
+                                checkoutParents.add(parent);
                             }
                         }
                     }
@@ -98,7 +117,7 @@ public class ItemsActivity extends AppCompatActivity {
 
         @NonNull
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, final ViewGroup parent) {
             ViewHolder mainViewHolder = null;
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -127,7 +146,28 @@ public class ItemsActivity extends AppCompatActivity {
                     viewHolder.addToCheckout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(ItemsActivity.this, items.get(position) + " added", Toast.LENGTH_SHORT).show();
+                            DatabaseReference refCheckout = firebaseDatabase.getReference().child("").child("Database").child(userName);
+                            refCheckout = refCheckout.child(items.get(position));
+                            boolean existed = false;
+                            for(int i = 0; i < checkoutParents.size(); i++) {
+                                if(items.get(position).equals(checkoutParents.get(i).food) &&
+                                        stores.get(position).equals(checkoutParents.get(i).store)) {
+                                    refCheckout.child(checkoutParents.get(i).parent).child("qty").setValue(Integer.parseInt(checkoutParents.get(i).quantity) + 1);
+                                    existed = true;
+                                }
+                            }
+                            if(!existed) {
+                                int j = 0;
+                                for(int i = 0; i < checkoutParents.size(); i++) {
+                                    if(items.get(position).equals(checkoutParents.get(i).food) &&
+                                            stores.get(position).equals(checkoutParents.get(i).store)) {
+                                        j++;
+                                    }
+                                }
+                                refCheckout.child("Checkout" + j).child(stores.get(position)).setValue(Double.parseDouble(prices.get(position)));
+                                refCheckout.child("Checkout" + j).child("qty").setValue(1);
+                            }
+                            Toast.makeText(ItemsActivity.this, items.get(position) + " added to checkout", Toast.LENGTH_SHORT).show();
                         }
                     });
                     viewHolder.addToFavorites.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +212,28 @@ public class ItemsActivity extends AppCompatActivity {
                     mainViewHolder.addToCheckout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(ItemsActivity.this, items.get(position) + " added", Toast.LENGTH_SHORT).show();
+                            DatabaseReference refCheckout = firebaseDatabase.getReference().child("").child("Database").child(userName);
+                            refCheckout = refCheckout.child(items.get(position));
+                            boolean existed = false;
+                            for(int i = 0; i < checkoutParents.size(); i++) {
+                                if(items.get(position).equals(checkoutParents.get(i).food) &&
+                                        stores.get(position).equals(checkoutParents.get(i).store)) {
+                                    refCheckout.child(checkoutParents.get(i).parent).child("qty").setValue(Integer.parseInt(checkoutParents.get(i).quantity) + 1);
+                                    existed = true;
+                                }
+                            }
+                            if(!existed) {
+                                int j = 0;
+                                for(int i = 0; i < checkoutParents.size(); i++) {
+                                    if(items.get(position).equals(checkoutParents.get(i).food) &&
+                                            stores.get(position).equals(checkoutParents.get(i).store)) {
+                                        j++;
+                                    }
+                                }
+                                refCheckout.child("Checkout" + j).child(stores.get(position)).setValue(prices.get(position));
+                                refCheckout.child("Checkout" + j).child("qty").setValue(1);
+                            }
+                            Toast.makeText(ItemsActivity.this, items.get(position) + " added to checkout", Toast.LENGTH_SHORT).show();
                         }
                     });
                     mainViewHolder.addToFavorites.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +261,14 @@ public class ItemsActivity extends AppCompatActivity {
         TextView price;
         Button addToCheckout;
         Button addToFavorites;
+    }
+
+    public class CheckoutParent {
+        String parent;
+        String food;
+        String store;
+        String price;
+        String quantity;
     }
 
 }
